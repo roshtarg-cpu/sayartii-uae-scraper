@@ -1,0 +1,5 @@
+node_modules/
+apify_storage/
+.actor/
+.DS_Store
+*.log

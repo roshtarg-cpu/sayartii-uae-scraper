@@ -1,0 +1,14 @@
+{
+  "name": "sayartii-uae-scraper",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Sayartii UAE cars scraper",
+  "main": "main.js",
+  "dependencies": {
+    "apify": "^3.0.0",
+    "crawlee": "^3.0.0"
+  },
+  "scripts": {
+    "start": "node main.js"
+  }
+}

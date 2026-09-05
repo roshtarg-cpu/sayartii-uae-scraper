@@ -1,0 +1,13 @@
+{
+  "actorOutputSchemaVersion": 1,
+  "title": "Sayartii UAE Scraper Output",
+  "description": "Car listings from Sayartii UAE",
+  "type": "object",
+  "properties": {
+    "results": {
+      "type": "string",
+      "title": "Cars",
+      "template": "{{links.apiDefaultDatasetUrl}}/items"
+    }
+  }
+}
