@@ -33,33 +33,35 @@ await Actor.main(async () => {
             
             const listings = [];
             
-            // Extract car listings - each has a link
+            // Extract car listings
             $('a[href*="/AE/l/"]').each((i, el) => {
                 if (itemCount >= maxResults) return false;
                 
                 const $link = $(el);
                 const url = $link.attr('href');
                 
-                if (!url || !url.includes('/AE/l/')) return;
+                if (!url) return;
                 
                 const fullUrl = url.startsWith('http') ? url : `https://sayartii.com${url}`;
                 
-                // Extract text content
-                const titleEl = $link.text().trim().split('\n').filter(t => t.trim());
-                const title = titleEl.find(t => t.match(/\d{4}/) && t.length > 10) || titleEl[0] || '';
+                // Get all text nodes
+                const allText = $link.text().split('\n').map(t => t.trim()).filter(Boolean);
                 
-                // Price usually contains 'aed'
-                const priceText = titleEl.find(t => t.toLowerCase().includes('aed')) || null;
+                // Title is the line with year and car name (e.g. "2019 Range Rover Velar")
+                const title = allText.find(t => t.match(/^\d{4}\s+\w+/)) || allText[0] || '';
                 
-                // Mileage contains 'km'
-                const mileage = titleEl.find(t => t.toLowerCase().includes('km')) || null;
+                // Price ends with 'aed'
+                const price = allText.find(t => t.toLowerCase().endsWith('aed')) || null;
+                
+                // Mileage contains 'k km' or similar
+                const mileage = allText.find(t => t.includes('km')) || null;
                 
                 // Image
                 const image = $link.find('img').attr('src') || null;
                 const fullImage = image && image.startsWith('http') ? image : 
                                  image ? `https://sayartii.com${image}` : null;
                 
-                if (!title || title.length < 5) return;
+                if (!title || title.length < 8) return;
                 
                 listings.push({
                     title,
